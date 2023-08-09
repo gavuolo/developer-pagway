@@ -28,7 +28,7 @@ export function handleApplicationErrors(
     });
   }
 
-  if (err.name === 'NotFoundError') {
+  if (err.name === 'NotFoundError' || err.name === "CardNotFound") {
     return res.status(httpStatus.NOT_FOUND).send({
       message: err.message,
     });

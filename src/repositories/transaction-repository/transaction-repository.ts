@@ -30,11 +30,19 @@ async function getTransactionById(user_id: number, transaction_id:number){
     })
 
 }
-
+async function findCardById(user_card_id: number, user_id: number){
+    return await prisma.user_card.findFirst({
+        where:{
+            id: user_card_id,
+            user_id
+        }
+    })
+}
 const transactionRepository = {
     createTransaction,
     getTransactionByUserId,
-    getTransactionById
+    getTransactionById,
+    findCardById
 }
 
 export default transactionRepository;
