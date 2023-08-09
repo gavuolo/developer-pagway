@@ -7,10 +7,10 @@ async function postTransaction(
   transactionData: TransactionBody,
   user_id: number
 ): Promise<Transaction> {
-  // await cardConfirmation(transactionData)
   const { value } = transactionData;
   const valueInt = Number(value) * 100;
   await findCard(transactionData, user_id)
+  
   return await transactionRepository.createTransaction(
     transactionData,
     user_id,

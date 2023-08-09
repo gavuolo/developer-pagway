@@ -1,5 +1,6 @@
 import { AuthenticateToken } from "@/middlewares/authentication-middleware";
 import { TransactionBody } from "@/protocols";
+import payableService from "@/services/payable-services/payable-service";
 import transactionService from "@/services/transaction-services/transaction-service";
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
@@ -16,7 +17,9 @@ export async function newTransaction(
       transactionData,
       user_id
     );
-    return res.status(httpStatus.CREATED).send(response);
+    const payable = await payableService.postPayable(response.id, user_id)
+    console.log(payable)
+    return res.sendStatus(httpStatus.CREATED);
   } catch (error) {
     console.log(error)
     next(error);
@@ -31,6 +34,7 @@ export async function listTransaction(
   const { user_id } = req;
   try {
     const response = await transactionService.getTransaction(user_id)
+    console.log(response)
     return res.status(httpStatus.OK).send(response)
   } catch (error) {
     next(error);

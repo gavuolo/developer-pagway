@@ -14,7 +14,7 @@ async function createTransaction(transactionData: TransactionBody, user_id: numb
 }
 
 async function getTransactionByUserId(user_id: number){
-    return await prisma.transaction.findFirst({
+    return await prisma.transaction.findMany({
         where: {
             user_id
         }

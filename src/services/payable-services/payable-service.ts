@@ -5,15 +5,14 @@ import { Payable } from "@prisma/client";
 import dayjs from "dayjs";
 
 async function postPayable(
-  payableData: PayableBody,
+  transaction_id: number,
   user_id: number
 ): Promise<Payable> {
   //buscar transação
   const transaction = await transactionRepository.getTransactionById(
     user_id,
-    payableData.transaction_id
+    transaction_id
   );
-
   const rateAndNetValue = rateAndNetValueCalculation(transaction.value);
   const payment_date = paymentDate();
   const response = {
@@ -60,8 +59,8 @@ async function getPayable(user_id: number) {
   const fixedBalanceAvailable = balanceAvailable.toFixed(2);
   const fixedForcastBalance = forcastBalance.toFixed(2);
   return {
-    fixedBalanceAvailable,
-    fixedForcastBalance
+    Available: fixedBalanceAvailable,
+    Forcast: fixedForcastBalance
   };
 }
 

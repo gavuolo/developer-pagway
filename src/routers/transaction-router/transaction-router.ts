@@ -6,6 +6,6 @@ import { Router } from "express";
 
 const transactionRouter = Router();
 transactionRouter.all('*', authenticateToken)
-transactionRouter.post('/', validateBody(transactionSchema), newTransaction);
+transactionRouter.post('/', newTransaction);
 transactionRouter.get('/', listTransaction)
 export { transactionRouter };
