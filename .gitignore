@@ -76,7 +76,7 @@ web_modules/
 .env
 .env.development
 .env.development.local
-.end.test
+.env.test
 .env.test.local
 .env.production.local
 .env.local

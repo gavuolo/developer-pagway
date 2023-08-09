@@ -13,7 +13,20 @@ export type LogInBody = {
 };
 
 export type TransactionBody = {
-  value: string;
+  value: number;
   description: string;
   user_card_id: number;
 };
+
+export type PayableBody = {
+  transaction_id: number;
+}
+
+export type PayableCreate = {
+  transaction_id: number;
+  rate: number;
+  net_value: number;
+  status: string;
+  payment_date: string;
+
+}

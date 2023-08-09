@@ -18,6 +18,7 @@ export async function newTransaction(
     );
     return res.status(httpStatus.CREATED).send(response);
   } catch (error) {
+    console.log(error)
     next(error);
   }
 }

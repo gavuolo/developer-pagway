@@ -1,16 +1,19 @@
 import { TransactionBody } from "@/protocols";
 import prisma from "../../config/database";
 
-async function createTransaction(transactionData: TransactionBody, user_id: number){
+async function createTransaction(transactionData: TransactionBody, user_id: number, valueInt: number){
     return await prisma.transaction.create({
         data:{
             user_id,
-            ...transactionData
+            value: valueInt,
+            description: transactionData.description,
+            user_card_id: transactionData.user_card_id
+            
         }
     })
 }
 
-async function getTransactionById(user_id: number){
+async function getTransactionByUserId(user_id: number){
     return await prisma.transaction.findFirst({
         where: {
             user_id
@@ -18,8 +21,19 @@ async function getTransactionById(user_id: number){
     })
 }
 
+async function getTransactionById(user_id: number, transaction_id:number){
+    return await prisma.transaction.findFirst({
+        where:{
+            user_id,
+            id: transaction_id
+        }
+    })
+
+}
+
 const transactionRepository = {
     createTransaction,
+    getTransactionByUserId,
     getTransactionById
 }
 

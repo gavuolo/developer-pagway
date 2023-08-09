@@ -1,16 +1,25 @@
-import { TransactionBody } from "@/protocols"
-import transactionRepository from "@/repositories/transaction-repository/transaction-repository"
-import { Transaction } from "@prisma/client"
+import { TransactionBody } from "@/protocols";
+import transactionRepository from "@/repositories/transaction-repository/transaction-repository";
+import { Transaction } from "@prisma/client";
 
-async function postTransaction(transactionData: TransactionBody, user_id: number): Promise<Transaction>{
-    return await transactionRepository.createTransaction(transactionData, user_id)
+async function postTransaction(
+  transactionData: TransactionBody,
+  user_id: number
+): Promise<Transaction> {
+  const { value } = transactionData;
+  const valueInt = Number(value) * 100;
+  return await transactionRepository.createTransaction(
+    transactionData,
+    user_id,
+    valueInt
+  );
 }
-async function getTransaction(user_id: number){
-    return await transactionRepository.getTransactionById(user_id)
+async function getTransaction(user_id: number) {
+  return await transactionRepository.getTransactionByUserId(user_id);
 }
 const transactionService = {
-    postTransaction,
-    getTransaction
-}
+  postTransaction,
+  getTransaction,
+};
 
-export default transactionService
+export default transactionService;
