@@ -16,13 +16,22 @@ model User {
   password    String
   Transaction Transaction[]
   User_card   User_card[]
+  Session     Session[]
+}
+
+model Session {
+  id        Int      @id @unique @default(autoincrement())
+  token     String
+  user_id   Int
+  User      User     @relation(fields: [user_id], references: [id])
+  createdAt DateTime @default(now())
 }
 
 model User_card {
   id                 Int           @id @unique @default(autoincrement())
   card_name          String
   card_number        String
-  card_expiring_date DateTime
+  card_expiring_date String
   card_cvv           String
   user_id            Int
   User               User          @relation(fields: [user_id], references: [id])
@@ -46,12 +55,12 @@ model Transaction {
 }
 
 model Payable {
-  id             Int      @id @unique @default(autoincrement())
+  id             Int         @id @unique @default(autoincrement())
   rate           String
   net_value      String
   status         String
   payment_date   DateTime
   created_at     DateTime
   transaction_id Int
-  Transaction Transaction @relation(fields: [transaction_id], references: [id])
+  Transaction    Transaction @relation(fields: [transaction_id], references: [id])
 }
