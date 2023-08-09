@@ -7,5 +7,5 @@ import { Router } from "express";
 const payableRouter = Router();
 payableRouter.all('*', authenticateToken)
 payableRouter.post('/', newPayable);
-payableRouter.get('/', listBalance)
+payableRouter.get('/balance', listBalance)
 export { payableRouter };

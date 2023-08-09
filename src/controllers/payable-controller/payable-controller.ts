@@ -13,7 +13,7 @@ export async function newPayable(
   const payableData = req.body as PayableBody;
   try {
     await payableService.postPayable(payableData, user_id);
-    return res.status(httpStatus.CREATED);
+    return res.sendStatus(httpStatus.CREATED);
   } catch (error) {
     console.log(error);
     next(error);
@@ -28,6 +28,9 @@ export async function listBalance(
   const { user_id } = req;
 
   try {
-    
-  } catch (error) {}
+    const response = await payableService.getPayable(user_id)
+    return res.status(httpStatus.OK).send(response);
+  } catch (error) {
+    next(error)
+  }
 }

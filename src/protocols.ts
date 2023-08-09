@@ -28,5 +28,5 @@ export type PayableCreate = {
   net_value: number;
   status: string;
   payment_date: string;
-
+  user_id: number;
 }

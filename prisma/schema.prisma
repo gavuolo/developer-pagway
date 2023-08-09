@@ -17,6 +17,7 @@ model User {
   Transaction Transaction[]
   User_card   User_card[]
   Session     Session[]
+  Payable     Payable[]
 }
 
 model Session {
@@ -56,7 +57,9 @@ model Payable {
   net_value      Int
   status         String
   payment_date   String
+  user_id        Int
   created_at     DateTime    @default(now())
   transaction_id Int
   Transaction    Transaction @relation(fields: [transaction_id], references: [id])
+  User           User        @relation(fields: [user_id], references: [id])
 }
