@@ -15,6 +15,18 @@ model User {
   email       String        @unique
   password    String
   Transaction Transaction[]
+  User_card   User_card[]
+}
+
+model User_card {
+  id                 Int           @id @unique @default(autoincrement())
+  card_name          String
+  card_number        String
+  card_expiring_date DateTime
+  card_cvv           String
+  user_id            Int
+  User               User          @relation(fields: [user_id], references: [id])
+  Transaction        Transaction[]
 }
 
 model Transaction {
@@ -27,17 +39,19 @@ model Transaction {
   description        String
   created_at         DateTime
   user_id            Int
+  user_card_id       Int
   User               User      @relation(fields: [user_id], references: [id])
+  User_card          User_card @relation(fields: [user_card_id], references: [id])
   Payable            Payable[]
 }
 
 model Payable {
-  id             Int         @id @unique @default(autoincrement())
+  id             Int      @id @unique @default(autoincrement())
   rate           String
   net_value      String
   status         String
   payment_date   DateTime
   created_at     DateTime
   transaction_id Int
-  Transaction    Transaction @relation(fields: [transaction_id], references: [id])
+  Transaction Transaction @relation(fields: [transaction_id], references: [id])
 }
