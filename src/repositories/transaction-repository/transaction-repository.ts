@@ -8,7 +8,6 @@ async function createTransaction(transactionData: TransactionBody, user_id: numb
             value: valueInt,
             description: transactionData.description,
             user_card_id: transactionData.user_card_id
-            
         }
     })
 }

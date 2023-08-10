@@ -17,11 +17,12 @@ export async function newTransaction(
       transactionData,
       user_id
     );
-    const payable = await payableService.postPayable(response.id, user_id)
-    console.log(payable)
-    return res.sendStatus(httpStatus.CREATED);
+    const { rate, net_value, payment_date, status } = await payableService.postPayable(response.id, user_id)
+    const realNetValue = net_value / 100
+    return res.status(httpStatus.CREATED).send({
+      rate, net_value: realNetValue, payment_date, status, value: transactionData.value
+    });
   } catch (error) {
-    console.log(error)
     next(error);
   }
 }
@@ -34,7 +35,6 @@ export async function listTransaction(
   const { user_id } = req;
   try {
     const response = await transactionService.getTransaction(user_id)
-    console.log(response)
     return res.status(httpStatus.OK).send(response)
   } catch (error) {
     next(error);

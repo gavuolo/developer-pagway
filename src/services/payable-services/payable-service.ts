@@ -8,7 +8,6 @@ async function postPayable(
   transaction_id: number,
   user_id: number
 ): Promise<Payable> {
-  //buscar transação
   const transaction = await transactionRepository.getTransactionById(
     user_id,
     transaction_id

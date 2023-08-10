@@ -38,16 +38,17 @@ describe("POST /user/card", () => {
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
   describe("when token is valid", () => {
-    it("should respond with status 204 and create card", async () => {
+    it("should respond with status 201 and create card", async () => {
       const emailCreated = faker.internet.email();
       const passwordCreated = faker.internet.password();
       const user = await createUser(emailCreated, passwordCreated);
       const token = jwt.sign({ user_id: user.id }, process.env.JWT_SECRET);
       await createLogin(user.id, token);
-      const card = createCard(user.id)
+      const { card_cvv, card_expiring_date, card_number, card_name } = await createCard(user.id)
       const response = await server
         .post("/user/card")
-        .set("Authorization", `Bearer ${token}`);
+        .set("Authorization", `Bearer ${token}`)
+        .send({card_cvv, card_expiring_date, card_number, card_name})
       expect(response.status).toBe(httpStatus.CREATED);
     });
   });

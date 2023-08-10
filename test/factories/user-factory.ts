@@ -19,7 +19,6 @@ export async function createLogin(user_id: number, token: string){
         }
     })
 }
-
 export async function createCard(user_id: number){
     return await prisma.user_card.create({
         data: {
